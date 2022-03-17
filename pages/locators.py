@@ -12,8 +12,7 @@ class ProductPageLocators():
     ADD_TO_BASKET = (By.CSS_SELECTOR, '#add_to_basket_form')
     PROD_NAME = (By.CSS_SELECTOR, 'div.product_main h1')
     PROD_MSG_NAME = (By.CSS_SELECTOR, 'div#messages div:nth-child(1) div.alertinner strong')
-    #PROD_PRICE = (By.CSS_SELECTOR, 'div.product_main .price_color')
-    PROD_PRICE = (By.CSS_SELECTOR, '.product_main .price_color')
-    #PROD_MSG_PRICE = (By.CSS_SELECTOR, '.alert-info .alertinner strong')
-    PROD_MSG_PRICE = (By.CSS_SELECTOR, '.alert-info > .alertinner > p > strong')
+    PROD_PRICE = (By.CSS_SELECTOR, 'div.product_main .price_color')
+    PROD_MSG_PRICE = (By.CSS_SELECTOR, '.alert-info .alertinner strong')
+
 
