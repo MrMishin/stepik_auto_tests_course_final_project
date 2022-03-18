@@ -2,6 +2,7 @@ import time
 import pytest
 from .pages.main_page import MainPage
 from .pages.product_page import ProductPage
+from .pages.basket_page import BasketPage
 
 '''
 @pytest.mark.parametrize("num", ['0', '1', '2', '3', '4', '5', '6', pytest.param('7', marks=pytest.mark.xfail), '8', '9'])
@@ -43,3 +44,14 @@ def test_guest_can_go_to_login_page_from_product_page(browser):
     page = ProductPage(browser, link)
     page.open()
     page.go_to_login_page()
+
+def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
+    link = "http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/"
+    page = ProductPage(browser, link)
+    page.open()
+    basket_page = BasketPage(browser, browser.current_url)
+    basket_page.go_to_basket_page()
+    #В корзине отсутствуют товары
+    basket_page.test_guest_not_empty_basket()
+    # В корзине есть надпись что корзина пустая
+    basket_page.test_guest_empty_basket_msg()
