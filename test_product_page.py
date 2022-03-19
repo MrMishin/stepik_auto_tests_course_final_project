@@ -1,6 +1,7 @@
 import time
+from faker import Faker
 import pytest
-from .pages.main_page import MainPage
+from .pages.main_page import MainPage, LoginPage
 from .pages.product_page import ProductPage
 from .pages.basket_page import BasketPage
 
@@ -55,3 +56,30 @@ def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
     basket_page.test_guest_not_empty_basket()
     # В корзине есть надпись что корзина пустая
     basket_page.test_guest_empty_basket_msg()
+
+
+@pytest.mark.add_to_basket
+class TestUserAddToBasketFromProductPage():
+    @pytest.fixture(scope="function", autouse=True)
+    def setup(self, browser):
+        link = "http://selenium1py.pythonanywhere.com/ru/accounts/login/"
+        login_page = LoginPage(browser, link)
+        login_page.open()
+        f = Faker()
+        email = f.email()
+        password = f.password()
+        login_page.register_new_user(email, password)
+        login_page.should_be_authorized_user()
+
+    def test_user_can_add_product_to_basket(self, browser):
+        link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
+        page = ProductPage(browser, link)
+        page.open()
+        page.test_user_can_add_product_to_basket()
+
+    def test_user_cant_see_success_message(self, browser):
+        link = "http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/"
+        page = ProductPage(browser, link)
+        page.open()
+        page.should_not_be_success_message()
+
