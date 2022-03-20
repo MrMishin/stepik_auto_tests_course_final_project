@@ -1,6 +1,5 @@
 import math
 import time
-
 from .locators import BasePageLocators
 from selenium.common.exceptions import NoSuchElementException
 from selenium.common.exceptions import NoAlertPresentException
@@ -45,12 +44,10 @@ class BasePage():
     def solve_quiz_and_get_code(self):
 
         alert = self.browser.switch_to.alert
-        #self.browser.implicitly_wait(5)
         x = alert.text.split(" ")[2]
         answer = str(math.log(abs((12 * math.sin(float(x))))))
         alert.send_keys(answer)
         alert.accept()
-        #self.browser.implicitly_wait(10)
         try:
             alert = self.browser.switch_to.alert
             alert_text = alert.text

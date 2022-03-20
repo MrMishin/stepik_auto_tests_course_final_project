@@ -1,7 +1,6 @@
 from .base_page import BasePage
 from .locators import BasketPageLocators
 
-
 class BasketPage(BasePage):
 
     def go_to_basket_page(self):

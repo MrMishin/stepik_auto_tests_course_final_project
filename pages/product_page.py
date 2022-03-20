@@ -1,9 +1,6 @@
 import time
 from .base_page import BasePage
 from .locators import MainPageLocators, ProductPageLocators
-from .login_page import LoginPage
-from selenium.webdriver.common.by import By
-from selenium.common.exceptions import NoSuchElementException
 
 class ProductPage(BasePage):
     def test_user_can_add_product_to_basket(self):
@@ -12,6 +9,12 @@ class ProductPage(BasePage):
         self.check_product_name()
         self.check_product_price()
 
+    def test_user_can_add_product_to_basket_promo(self):
+        self.should_be_add_to_basket_button()
+        self.add_to_basket()
+        self.solve_quiz_and_get_code() # Calculation for promo
+        self.check_product_name()
+        self.check_product_price()
 
     # Проверка наличия кнопки добавления в заказ
     def should_be_add_to_basket_button(self):
@@ -21,8 +24,7 @@ class ProductPage(BasePage):
     def add_to_basket(self):
         link = self.browser.find_element(*ProductPageLocators.ADD_TO_BASKET)
         link.click()
-        #self.solve_quiz_and_get_code()
-        #self.browser.implicitly_wait(2)
+        self.browser.implicitly_wait(2)
 
     #Проверка имени продукта
     def check_product_name(self):
